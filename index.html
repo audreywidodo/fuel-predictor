@@ -1,1 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marathon Fuel Predictor</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; padding: 40px; max-width: 900px; }
+    h1 { font-size: 40px; margin: 0 0 12px; }
+    p { font-size: 18px; line-height: 1.5; }
+    .card { border: 1px solid #eee; border-radius: 16px; padding: 20px; margin-top: 18px; }
+    label { display:block; margin-top: 12px; font-weight: 600; }
+    input, select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; margin-top: 6px; font-size: 16px; }
+    button { margin-top: 16px; padding: 12px 16px; border-radius: 14px; border: 0; font-size: 16px; cursor: pointer; }
+    .result { margin-top: 14px; padding: 14px; border-radius: 14px; background: #f7f7f7; }
+    .small { color:#666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Marathon Fuel Predictor</h1>
+  <p>Get a fueling plan based on real runners like you. (Mock v1)</p>
 
+  <div class="card">
+    <h2>Predict my fueling</h2>
+
+    <label>Goal marathon time</label>
+    <input id="time" placeholder="e.g., 3:45" />
+
+    <label>Climate</label>
+    <select id="climate">
+      <option>Mild</option>
+      <option>Hot</option>
+      <option>Hot & humid</option>
+      <option>Cold</option>
+    </select>
+
+    <label>Experience</label>
+    <select id="exp">
+      <option>First marathon</option>
+      <option>2–5 marathons</option>
+      <option>5+ marathons</option>
+    </select>
+
+    <label>Sensitive stomach?</label>
+    <select id="gi">
+      <option>No</option>
+      <option>Yes</option>
+    </select>
+
+    <button onclick="predict()">Show plan</button>
+
+    <div id="out" class="result" style="display:none;"></div>
+    <p class="small">Later: hook this to real survey data.</p>
+  </div>
+
+  <div class="card">
+    <h2>Contribute your race data</h2>
+    <p>Help build the dataset. Takes 2 minutes.</p>
+    <p><a href="#" target="_blank">Submit your marathon fueling survey →</a></p>
+  </div>
+
+<script>
+function predict(){
+  // Mock logic for now (replace with real aggregation later)
+  const climate = document.getElementById('climate').value;
+  const gi = document.getElementById('gi').value;
+
+  let carbs = (climate.includes('Hot')) ? '50–70g' : '55–80g';
+  let interval = (gi === 'Yes') ? 'every 35–40 min (smaller doses)' : 'every 25–35 min';
+  let electrolytes = (climate.includes('Hot')) ? 'strongly recommended' : 'recommended';
+
+  const html = `
+    <strong>Suggested plan (mock):</strong><br><br>
+    • Carbs: <b>${carbs}/hour</b><br>
+    • Gel interval: <b>${interval}</b><br>
+    • Electrolytes: <b>${electrolytes}</b><br><br>
+    <span class="small">This is a placeholder model. Next step is powering this with crowdsourced data.</span>
+  `;
+  const out = document.getElementById('out');
+  out.innerHTML = html;
+  out.style.display = 'block';
+}
+</script>
+</body>
+</html>
